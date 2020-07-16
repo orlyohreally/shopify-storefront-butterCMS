@@ -24,7 +24,7 @@ console.log(__dirname)
 app.use("/.netlify/functions/server", router); // path must route to lambda
 app.use(express.static(path.join(__dirname, "../storefront/dist/storefront")));
 router.get("/*", (req, res) => {
-  return res.status(200).html(__dirname);
+  return res.status(200).send(__dirname);
   res.sendFile(
     path.join(__dirname, "../storefront/dist/storefront/index.html")
   );
