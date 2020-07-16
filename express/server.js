@@ -8,7 +8,7 @@ const path = require("path");
 // );
 
 const app = express();
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 const router = express.Router();
 
@@ -20,16 +20,12 @@ const router = express.Router();
 router.get("/api", (req, res) => {
   res.status(200).json({ message: "I do work!" });
 });
-console.log(__dirname)
-app.use("/.netlify/functions/server", router); // path must route to lambda
-app.use(express.static(path.join(__dirname, "../storefront/dist/storefront")));
+app.use(express.static(path.join(__dirname, "../dist/storefront")));
 router.get("/*", (req, res) => {
-  return res.status(200).send(__dirname);
-  res.sendFile(
-    path.join(__dirname, "../storefront/dist/storefront/index.html")
-  );
+  res.sendFile(path.join(__dirname, "../dist/storefront/index.html"));
 });
 
+app.use("/.netlify/functions/server", router); // path must route to lambda
 
 module.exports = app;
 module.exports.handler = serverless(app);
